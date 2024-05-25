@@ -1,0 +1,12 @@
+import scapy.all as scapy
+
+def sniff_packets(count=5):
+    packets = scapy.sniff(count=count)
+    for packet in packets:
+        print("Source IP:", packet[scapy.IP].src)
+        print("Destination IP:", packet[scapy.IP].dst)
+        print("Protocol:", packet.protocol)
+        print("Payload:", packet.payload)
+        print("")
+
+sniff_packets()
