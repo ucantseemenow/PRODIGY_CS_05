@@ -1,0 +1,32 @@
+pip install kamene #RUN THIS FIRST
+
+
+
+from kamene.all import *
+
+def packet_sniffer():
+    # Define the interface to listen on
+    interface = "eth0"
+
+    # Create a packet sniffer object
+    packets = sniff(filter="tcp", iface=interface, prn=packet_callback, count=10)
+
+def packet_callback(packet):
+    # Print the packet information
+    print(packet.summary())
+
+# Call the packet sniffer function
+packet_sniffer()
+
+
+
+
+
+
+proto_names = {1: 'ICMP', 6: 'TCP', 17: 'UDP'}
+
+def packet_callback(packet):
+    proto_name = proto_names.get(packet.proto, 'Unknown')
+    print(f"{packet.src} -> {packet.dst} : {proto_name} : {bytes(packet).decode('utf-8', 'ignore')}")
+
+sniff(filter="tcp", prn=packet_callback)
